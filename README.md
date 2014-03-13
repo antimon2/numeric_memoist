@@ -1,6 +1,6 @@
 # NumericMemoist
 
-TODO: Write a gem description
+The memoize library allows you to cache methods for Numerics (Integer/Float) in Ruby >= 2.0.0.
 
 ## Installation
 
@@ -18,7 +18,20 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+Open class `Integer`/`Float`, extend `NumericMemoist`:
+
+    require 'numeric_memoist'
+
+    class Integer
+      extend NumericMemoist
+
+      def sq
+        self ** 2
+      end
+      memoize :sq
+    end
+
+Then Integer#sq will only be calcurated once.
 
 ## Contributing
 
@@ -27,3 +40,11 @@ TODO: Write usage instructions here
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)
 5. Create new Pull Request
+
+## Acknowledgements
+
+Inspired by [Memoist](https://github.com/matthewrudy/memoist)
+
+## License
+
+Under the [MIT License](http://www.opensource.org/licenses/MIT).
