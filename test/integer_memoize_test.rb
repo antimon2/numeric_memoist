@@ -7,10 +7,6 @@ class IntegerMemoizeTest < Test::Unit::TestCase
     extend NumericMemoist
   end
 
-  def stdout_buffer
-    @stdout_buffer
-  end
-
   def setup
     @stdout_org = $stdout.dup
     @stdout_buffer = ""
