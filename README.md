@@ -18,7 +18,7 @@ Or install it yourself as:
 
 ## Usage
 
-Open class `Integer`/`Float`, extend `NumericMemoist`:
+Open class `Integer`/`Float`, extend `NumericMemoist` like the following:
 
     require 'numeric_memoist'
 
@@ -31,7 +31,37 @@ Open class `Integer`/`Float`, extend `NumericMemoist`:
       memoize :sq
     end
 
-Then Integer#sq will only be calcurated once.
+Then Integer#sq will only be calcurated once. 
+(These work on Ruby >= 2.0.0, and also <= 1.9.x.)
+
+### Comparison to others
+
+On Ruby <= 1.9.x, you may code as follows:
+
+    class Integer
+      def sq
+        @sq ||= self ** 2
+        # This raises RuntimeError on Ruby >= 2.0.x
+      end
+    end
+
+This doesn't work on Ruby >= 2.0.0, since Integer is frozen.
+
+You may use another similar gem like [Memoist](https://github.com/matthewrudy/memoist):
+
+    require 'memoist'
+
+    class Integer
+      extend Memoist
+
+      def sq
+        self ** 2
+      end
+      memoize :sq
+      # No Error raised, but momeize doesn't work on Ruby >= 2.0.x
+    end
+
+This doesn't work on Ruby >= 2.0.0 for the same reason.
 
 ## Contributing
 
@@ -43,7 +73,7 @@ Then Integer#sq will only be calcurated once.
 
 ## Acknowledgements
 
-Inspired by [Memoist](https://github.com/matthewrudy/memoist)
+Inspired by [Memoist](https://github.com/matthewrudy/memoist).
 
 ## License
 
