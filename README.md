@@ -63,6 +63,11 @@ You may use another similar gem like [Memoist](https://github.com/matthewrudy/me
 
 This doesn't work on Ruby >= 2.0.0 for the same reason.
 
+### For newer Rubies
+
+NumericMemoist works well with Ruby 2.4.0 (tested with 2.4.0-preview2).  
+An old example (bundled with NumericMemoist v0.0.1) does not work with Ruby >= 2.4.0 (for `Integer`'s specification change). Updated example(s) in NumericMemoist >= v0.0.2 .
+
 ## Contributing
 
 1. Fork it
