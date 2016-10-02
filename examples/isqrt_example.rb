@@ -5,9 +5,20 @@ class Integer
   extend NumericMemoist
 
   def isqrt
+    if self < 0
+      $stderr.puts "sqrt(#{self}) is not a (real) number"
+      return 0.0/0  # => NaN
+    elsif self < 2
+      $stderr.puts "sqrt(#{self}) == #{self}."
+      return self
+    end
+    if self <= 0x20000000000000
+      $stderr.puts "calculate sqrt(#{self}).to_i (<= MaxIntFloat)"
+      return Math.sqrt(self).to_i
+    end
     $stderr.puts "calculate sqrt(#{self}).to_i"
     # === Newton-Raphson method ===
-    n = self
+    n = self >> 26
     n = (n * n + self).div(2 * n) while n * n > self
     n
   end
@@ -19,21 +30,9 @@ class Integer
   memoize :isqrt, :sq?
 end
 
-class Fixnum
-  # Need not to extend NumericMemoize (Integer has already extended NumericMemoize)
-  def isqrt
-    return super if self > 0x1fffffffffffff
-    $stderr.puts "calculate sqrt(#{self}).to_i (for Fixnum)"
-    return 0.0/0 if self < 0  # => NaN
-    return self if self < 2
-    Math.sqrt(self).to_i
-  end
-  memoize :isqrt
-end
-
 if $0 == __FILE__
   p 123456789.isqrt
-  # STDERR> calculate sqrt(123456789).to_i (for Fixnum)
+  # STDERR> calculate sqrt(123456789).to_i (<= MaxIntFloat)
   # STDOUT> 11111
   p 123456789.sq?
   # STDERR> determining if 123456789 is square number
